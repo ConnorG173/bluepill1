@@ -215,18 +215,9 @@ uint64_t get_hclock_frequency(void)
 
 void crude_delay_cyc(uint64_t cycles)
 {
-    while(cycles--)
+    while(cycles)
     {
-        __asm__ volatile ("NOP"); //1 Cycle Loop
+        __asm__("NOP"); //1 Cycle Loop
+        cycles--;
     }
-}
-
-void crude_delay_s(int n)
-{
-    delay_cyc(get_hclock_frequency() * n);
-}
-
-void crude_delay_ms(int n)
-{
-    delay_cyc(get_hclock_frequency()/1000 * n);
 }

@@ -1,0 +1,109 @@
+
+There are no discarded input sections
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+flash            0x08000000         0x00010000         xr
+sram             0x20000000         0x00005000         rw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+                0x08000000                        . = ORIGIN (flash)
+
+.vectors        0x08000000       0x40
+ *(.vectors)
+ .vectors       0x08000000       0x40 startup.o
+                0x08000000                vectors
+
+.text           0x08000040      0x934
+                0x08000040                        _stext = .
+ *(.text*)
+ .text          0x08000040      0x7d4 clocks_stm32f103.o
+                0x08000040                clk_config
+                0x080006fa                get_hclock_frequency
+                0x080007e4                crude_delay_cyc
+ .text          0x08000814       0xb4 main.o
+                0x08000814                main
+ .text          0x080008c8       0x6c startup.o
+                0x080008c8                Reset_Handler
+                0x0800092c                SVCall_Handler
+                0x0800092c                HardFault_Handler
+                0x0800092c                SysTick_Handler
+                0x0800092c                PendSV_Handler
+                0x0800092c                NMI_Handler
+                0x0800092c                UsageFault_Handler
+                0x0800092c                Default_Handler
+                0x0800092c                MemManage_Handler
+                0x0800092c                BusFault_Handler
+                0x0800092c                DebugMonitor_Handler
+ *(.rodata*)
+ .rodata        0x08000934       0x40 clocks_stm32f103.o
+                0x08000974                        _etext = .
+
+.glue_7         0x08000974        0x0
+ .glue_7        0x08000974        0x0 linker stubs
+
+.glue_7t        0x08000974        0x0
+ .glue_7t       0x08000974        0x0 linker stubs
+
+.vfp11_veneer   0x08000974        0x0
+ .vfp11_veneer  0x08000974        0x0 linker stubs
+
+.v4_bx          0x08000974        0x0
+ .v4_bx         0x08000974        0x0 linker stubs
+
+.iplt           0x08000974        0x0
+ .iplt          0x08000974        0x0 clocks_stm32f103.o
+
+.rel.dyn        0x08000974        0x0
+ .rel.iplt      0x08000974        0x0 clocks_stm32f103.o
+
+.data           0x20000000       0x14 load address 0x08000974
+                0x20000000                        _sdata = .
+ *(.data*)
+ .data          0x20000000        0x0 clocks_stm32f103.o
+ .data          0x20000000       0x14 main.o
+                0x20000000                RCC_CFGR
+                0x20000004                ITM_LR
+                0x20000008                DEMCR
+                0x2000000c                DWTCR
+                0x20000010                DWT_CYCCNT_REG
+ .data          0x20000014        0x0 startup.o
+                0x20000014                        _edata = .
+                0x08000974                        _sidata = LOADADDR (.data)
+
+.igot.plt       0x20000014        0x0 load address 0x08000988
+ .igot.plt      0x20000014        0x0 clocks_stm32f103.o
+
+.bss            0x20000014        0x0 load address 0x08000988
+                0x20000014                        _sbss = .
+ *(.bss*)
+ .bss           0x20000014        0x0 clocks_stm32f103.o
+ .bss           0x20000014        0x0 main.o
+ .bss           0x20000014        0x0 startup.o
+ *(COMMON)
+                0x20000014                        _ebss = .
+                0x00000001                        ASSERT ((ORIGIN (flash) == 0x8000000), FLASH ORIGIN WRONG)
+                0x20005000                        _estack = (ORIGIN (sram) + LENGTH (sram))
+LOAD clocks_stm32f103.o
+LOAD main.o
+LOAD startup.o
+OUTPUT(firmware.elf elf32-littlearm)
+LOAD linker stubs
+
+.comment        0x00000000       0x26
+ .comment       0x00000000       0x26 clocks_stm32f103.o
+                                 0x27 (size before relaxing)
+ .comment       0x00000026       0x27 main.o
+ .comment       0x00000026       0x27 startup.o
+
+.ARM.attributes
+                0x00000000       0x2d
+ .ARM.attributes
+                0x00000000       0x2d clocks_stm32f103.o
+ .ARM.attributes
+                0x0000002d       0x2d main.o
+ .ARM.attributes
+                0x0000005a       0x2d startup.o

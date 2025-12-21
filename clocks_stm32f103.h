@@ -4,14 +4,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-volatile unsigned int* RCC_CFGR = (unsigned int *)(0x40021000 + 0x04);
-
-//Maybe Unused
-volatile unsigned int* ITM_LR = (unsigned int *)(0xE0000FB0);
-volatile unsigned int* DEMCR = (unsigned int *)(0xE000EDFC);
-volatile unsigned int* DWTCR = (unsigned int *)(0xE0001000);
-volatile unsigned int* DWT_CYCCNT_REG = (unsigned int *)(0xE0001004);
-
 enum CLKSRC
 {
     HSI,
