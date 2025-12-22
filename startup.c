@@ -34,11 +34,11 @@ void (* const vectors[])(void) = { // Constant (live in flash) Array of ptrs to 
     BusFault_Handler,            // 5
     UsageFault_Handler,          // 6
     0, 0, 0, 0,                  // 7–10 reserved
-    Default_Handler,             // 11 SVCall
-    Default_Handler,             // 12 DebugMonitor
+    SVCall_Handler,             // 11 SVCall
+    DebugMonitor_Handler,             // 12 DebugMonitor
     0,                           // 13 reserved
-    Default_Handler,             // 14 PendSV
-    Default_Handler              // 15 SysTick      
+    PendSV_Handler,             // 14 PendSV
+    SysTick_Handler              // 15 SysTick      
 };
 
 void Reset_Handler(void)

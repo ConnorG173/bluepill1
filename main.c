@@ -21,7 +21,7 @@ int main(void)
         *gpioc_odr = *gpioc_odr ^ (1 << 13);
     }
 
-    clk_config(PLL, 1, 0, 9, 1, 2, 1, 6);
+    clk_config(PLL, 1, 0, 9, 1, 2, 1, 8);
 
     while (1)
     {

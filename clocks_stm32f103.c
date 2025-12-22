@@ -183,7 +183,7 @@ void clk_config(enum CLKSRC source, bool pll_src_hse, bool pll_hse_div2, int pll
     return;
 }
 
-uint64_t get_hclock_frequency(void)
+uint32_t get_hclock_frequency(void)
 {
     volatile unsigned int* RCC_CFGR = (unsigned int *)(0x40021000 + 0x04);
 
@@ -213,7 +213,7 @@ uint64_t get_hclock_frequency(void)
     return PLLSRCFREQ * PLLMUL / AHBPRE;
 }
 
-void crude_delay_cyc(uint64_t cycles)
+void crude_delay_cyc(uint32_t cycles)
 {
     while(cycles)
     {
