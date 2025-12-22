@@ -2,6 +2,7 @@
 #define SYSTICK_STM32F103_H_
 
 #include <stdint.h>
+#include <stdbool.h>
 
 void systick_init(uint32_t periodms);
 
