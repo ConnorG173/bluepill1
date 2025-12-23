@@ -1,8 +1,10 @@
-#include "clocks_stm32f103.h"
+#include "init.h"
 
 
 int main(void)
 {
+    stdinit();
+    
     volatile unsigned int *rcc_apb2enr = (unsigned int *)(0x40021000 + 0x18);
     volatile unsigned int *gpioc_crh = (unsigned int *)(0x40011000 + 0x04);
     volatile unsigned int *gpioc_odr = (unsigned int *)(0x40011000 + 0x0C);
@@ -20,8 +22,6 @@ int main(void)
         }
         *gpioc_odr = *gpioc_odr ^ (1 << 13);
     }
-
-    clk_config(PLL, 1, 0, 9, 1, 2, 1, 8);
 
     while (1)
     {

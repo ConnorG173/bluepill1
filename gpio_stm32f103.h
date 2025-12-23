@@ -1,5 +1,5 @@
-#ifndef STM32F103C8T6GPIO_H
-#define STM32F103C8T6GPIO_H
+#ifndef GPIO_STM32F103_H
+#define GPIO_STM32F103_H
 #include <string.h>
 #include <stdbool.h>
 
