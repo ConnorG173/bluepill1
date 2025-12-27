@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# ARG 1 = source directory (.c files)
+# ARG 2 = build directory (where the .o files will go)
+
 # Absolute path to this script
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Project root = parent of bash_scripts
@@ -61,5 +64,9 @@ for cfile in "${CFILES[@]}"; do
     -c "$cfile" -o "$ofile"
 done
 
+cd ..
+cd build
+
 echo "Done"
 
+# stm32flash -w firmware.bin -v /dev/ttyUSB0

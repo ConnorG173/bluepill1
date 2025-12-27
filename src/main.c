@@ -1,6 +1,7 @@
 
 #include "platform.h"
 #include "init.h"
+#include "systick_stm32f103.h"
 
 int main(void)
 {
@@ -23,7 +24,9 @@ int main(void)
 
     while (1)
     {
-        delay_ticks(100);
+        subtick_duration_t duration = gen_duration_t(100, 100);
+        subtick_duration_t *durationPtr = &duration;
+        delay_subtick_ticks(durationPtr);
         *gpioc_odr = *gpioc_odr ^ (1 << 13);
     }
 

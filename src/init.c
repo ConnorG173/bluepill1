@@ -8,6 +8,7 @@ void stdinit(void)
 {
     clk_config(PLL, 1, 0, 9, 1, 2, 1, 6);
     systick_init();
+    SystemCoreClockUpdate();
 
     //GPIO INITs
 

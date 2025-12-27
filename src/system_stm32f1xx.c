@@ -174,7 +174,11 @@ const uint8_t APBPrescTable[8U] =  {0, 0, 0, 0, 1, 2, 3, 4};
   * @param  None
   * @retval None
   */
-void SystemInit (void) //Dont Use
+
+
+
+  /* DO NOT USE THIS BRO!!!!!! */
+void SystemInit (void)
 {
 #if defined(STM32F100xE) || defined(STM32F101xE) || defined(STM32F101xG) || defined(STM32F103xE) || defined(STM32F103xG)
   #ifdef DATA_IN_ExtSRAM
@@ -187,6 +191,8 @@ void SystemInit (void) //Dont Use
   SCB->VTOR = VECT_TAB_BASE_ADDRESS | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal SRAM. */
 #endif /* USER_VECT_TAB_ADDRESS */
 }
+/* DONT USE IT BRO!!!!! */
+
 
 /**
   * @brief  Update SystemCoreClock variable according to Clock Register Values.

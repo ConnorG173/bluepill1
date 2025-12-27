@@ -28,6 +28,12 @@ uint32_t systime_ticks_elapsed(uint32_t since_time_ticks);
 bool systime_ticks_expired(uint32_t start_ticks, uint32_t duration_ticks);
 void delay_ticks(uint32_t duration_ticks);
 
+subtick_time_t subtick_time_now(void);
+subtick_duration_t subtick_time_elapsed(subtick_time_t *since);
+bool subtick_time_expired(subtick_time_t *start, subtick_duration_t *duration);
+void delay_subtick_ticks(subtick_duration_t *duration);
+subtick_duration_t gen_duration_t(uint32_t ticks, uint32_t cycles); //cycles less than STK_LOAD
+
 uint64_t ticks_to_ms(uint32_t ticks);
 uint32_t ms_to_ticks(uint64_t ms);
 

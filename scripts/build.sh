@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
+# Must place build.sh in same dir as .o files!
+
 # Toolchain
 LD=arm-none-eabi-ld
 OBJCOPY=arm-none-eabi-objcopy

@@ -66,7 +66,7 @@ void delay_ticks(uint32_t duration_ticks) //Not Subtick Accurate!
 {
     uint32_t start = systime_ticks_now();
     while (!systime_ticks_expired(start, duration_ticks)) {
-        __asm__("NOP");
+        __WFI();
     }
 }
 
@@ -118,10 +118,10 @@ void delay_subtick_ticks(subtick_duration_t *duration)
     subtick_time_t start = subtick_time_now();
     subtick_time_t *ptr = &start;
     while (!subtick_time_expired(ptr, duration)) {
-        __asm__("NOP");
+        __WFI(); // Power Friendly Do Nothing Instruction
     }
 }
-subtick_duration_t gen_duration_t(uint32_t ticks, uint32_t cycles) //cycles less than STK_LOAD
+subtick_duration_t gen_duration_t(uint32_t ticks, uint32_t cycles)
 {
     if (cycles > STK_LOAD) {
         ticks += cycles / STK_LOAD;
