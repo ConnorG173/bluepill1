@@ -7,6 +7,16 @@
 extern const uint32_t tickperiodms;
 extern volatile uint32_t totalticks;
 
+typedef struct subtick_time{
+    uint32_t ticks;
+    uint32_t cyc;
+} subtick_time_t;
+
+typedef struct subtick_duration{
+    uint32_t ticks_elap;
+    uint32_t cyc_elap;
+} subtick_duration_t;
+
 bool systick_init(void); //returns 1 if success, 0 if fail
 
 void systick_start(void);

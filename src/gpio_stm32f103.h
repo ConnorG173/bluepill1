@@ -1,7 +1,7 @@
 #ifndef GPIO_STM32F103_H
 #define GPIO_STM32F103_H
-#include <string.h>
-#include <stdbool.h>
+
+#include "platform.h"
 
 
   enum GPIO_MODES { INPUT, OUTPUT_10MHZ, OUTPUT_2MHZ, OUTPUT_50MHZ };

@@ -1,6 +1,6 @@
-#include <memory.h>
-#include "clocks_stm32f103.h"
 
+#include "platform.h"
+#include "clocks_stm32f103.h"
 
 void clk_config(enum CLKSRC source, bool pll_src_hse, bool pll_hse_div2, int pll_mul, int ahb_pre, int apb1_pre, int apb2_pre, int adc_pre)
 {
@@ -211,13 +211,4 @@ uint32_t get_hclock_frequency(void)
     int AHBPRE = AHBPrescTable[index];
 
     return PLLSRCFREQ * PLLMUL / AHBPRE;
-}
-
-void crude_delay_cyc(uint32_t cycles)
-{
-    while(cycles)
-    {
-        __asm__("NOP"); //1 Cycle Loop
-        cycles--;
-    }
 }

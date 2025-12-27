@@ -1,4 +1,5 @@
-#include <stdint.h>
+
+#include "platform.h"
 
 extern uint32_t _estack;
 

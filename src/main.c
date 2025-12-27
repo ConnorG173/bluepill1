@@ -1,5 +1,6 @@
-#include "init.h"
 
+#include "platform.h"
+#include "init.h"
 
 int main(void)
 {
@@ -16,19 +17,13 @@ int main(void)
 
     for (int i = 0; i < 20; i++)
     {
-        for (volatile unsigned int i = 0; i <= 100000; i++)
-        {
-            __asm__("NOP");
-        }
+        delay_ticks(1000);
         *gpioc_odr = *gpioc_odr ^ (1 << 13);
     }
 
     while (1)
     {
-        for (volatile unsigned int i = 0; i <= 100000; i++)
-        {
-            __asm__("NOP");
-        }
+        delay_ticks(100);
         *gpioc_odr = *gpioc_odr ^ (1 << 13);
     }
 

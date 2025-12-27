@@ -1,4 +1,7 @@
-#include "stm32f103c8t6gpio.h"
+
+#include "platform.h"
+#include "gpio_stm32f103.h"
+
 
 void configure_gpio_pin(char port, int pin, enum GPIO_CONFIGS config, enum GPIO_MODES mode)
 {
