@@ -44,7 +44,7 @@ void (* const vectors[])(void) = { // Constant (live in flash) Array of ptrs to 
 
 void Reset_Handler(void)
 {
-    __asm volatile ("cpsid i"); //Disable All Interrupts
+    __asm__ volatile ("cpsid i"); //Disable All Interrupts
     uint32_t *src;
     uint32_t *dst;
 
@@ -61,7 +61,7 @@ void Reset_Handler(void)
         *dst++ = 0;
     }
 
-    __asm volatile ("cpsie i"); //ReEnable Interrupts before main()
+    __asm__ volatile ("cpsie i"); //ReEnable Interrupts before main()
     main(); // Call main()
 
     while(1); // Infinite loop to handle main return

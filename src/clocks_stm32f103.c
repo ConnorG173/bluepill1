@@ -193,8 +193,12 @@ uint32_t get_hclock_frequency(void)
     enum CLKSRC clocksource = HSI;
     clocksource = (*RCC_CFGR >> 2) & 0b11;
 
-    if (clocksource == HSI) {return HSI_FRQ;}
-    if (clocksource == HSE) {return HSE_FRQ;}
+    int index = ((*RCC_CFGR >> 4) & 0b1111);
+    static const int AHBPrescTable[16] = {1,1,1,1,1,1,1,1,2,4,8,16,64,128,256,512};
+    int AHBPRE = AHBPrescTable[index];
+
+    if (clocksource == HSI) {return HSI_FRQ / AHBPRE;}
+    if (clocksource == HSE) {return HSE_FRQ / AHBPRE;}
 
     int PLLXTPRE = 1;
     if (((*RCC_CFGR >> 17) & 0b1) == 0b1) {PLLXTPRE = 2;}
@@ -205,10 +209,28 @@ uint32_t get_hclock_frequency(void)
     int PLLMUL = 2;
     if (((*RCC_CFGR >> 18) & 0b1111) == 0b1111) {PLLMUL = 16;}
     else {PLLMUL = ((*RCC_CFGR >> 18) & 0b1111) + 2;}
-    
-    int index = ((*RCC_CFGR >> 4) & 0b1111);
-    static const int AHBPrescTable[16] = {1,1,1,1,1,1,1,1,2,4,8,16,64,128,256,512};
-    int AHBPRE = AHBPrescTable[index];
 
     return PLLSRCFREQ * PLLMUL / AHBPRE;
+}
+
+uint32_t get_pclk1(void)
+{
+    uint32_t hclk = get_hclock_frequency();
+
+    int ppre1;
+    static const int PCLK1PrescTable[8] = {1,1,1,1,2,4,8,16};
+    int idx = ((RCC->CFGR >> 8) & 0b111);
+    ppre1 = PCLK1PrescTable[idx];
+    return hclk / ppre1;
+}
+
+uint32_t get_pclk2(void)
+{
+    uint32_t hclk = get_hclock_frequency();
+
+    int ppre2;
+    static const int PCLK2PrescTable[8] = {1,1,1,1,2,4,8,16};
+    int idx = ((RCC->CFGR >> 11) & 0b111);
+    ppre2 = PCLK2PrescTable[idx];
+    return hclk / ppre2;
 }
