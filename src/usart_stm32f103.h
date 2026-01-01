@@ -4,8 +4,14 @@
 
 #include "platform.h"
 
-#define USART_BUFFER8_SIZE 128U // 128 uint8_t
-#define USART_BUFFER9_SIZE 128U // 128 uint16_t
+#define USART_BUFFER8_SIZE 128U // size in bytes = USART_BUFFER8_SIZE * sizeof(uint8_t) bytes
+#define USART_BUFFER9_SIZE 128U // size in bytes = USART_BUFFER9_SIZE * sizeof(uint16_t) bytes
+
+#define USART1_IRQ_PRIO 8U // Range 0-15
+#define USART2_IRQ_PRIO 8U // Range 0-15
+#define USART3_IRQ_PRIO 8U // Range 0-15
+
+extern volatile ui32 irqtester;
 
 typedef enum
 {
@@ -39,7 +45,8 @@ typedef struct usart {
     usart_wordlength_t mode;
 } usart_t;
 
-usart_t* usart_config(USART_NUMBER usart_number, usart_wordlength_t mode, uint32_t baud_rate_bps, bool clock_used, bool parity_used, bool parity_selection_odd); 
+usart_t* usart_config(USART_NUMBER usart_number, usart_wordlength_t mode, uint32_t baud_rate_bps, bool clock_used, bool parity_used, bool parity_selection_odd);
+// RETURNS NULL ON FAILURE!!!
 
 bool usart_tx_push(usart_t* u, uint16_t data);
 bool usart_rx_pop(usart_t* u, uint16_t* output);

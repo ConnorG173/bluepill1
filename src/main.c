@@ -7,9 +7,9 @@ int main(void)
 {
     stdinit();
     
-    volatile unsigned int *rcc_apb2enr = (unsigned int *)(0x40021000 + 0x18);
-    volatile unsigned int *gpioc_crh = (unsigned int *)(0x40011000 + 0x04);
-    volatile unsigned int *gpioc_odr = (unsigned int *)(0x40011000 + 0x0C);
+    volatile ui32 *rcc_apb2enr = (unsigned int *)(0x40021000 + 0x18);
+    volatile ui32 *gpioc_crh = (unsigned int *)(0x40011000 + 0x04);
+    volatile ui32 *gpioc_odr = (unsigned int *)(0x40011000 + 0x0C);
 
     // Enable GPIOC clock
     *rcc_apb2enr = *rcc_apb2enr | (0b00010000);

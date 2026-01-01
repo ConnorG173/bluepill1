@@ -4,9 +4,9 @@
 
 void clk_config(enum CLKSRC source, bool pll_src_hse, bool pll_hse_div2, int pll_mul, int ahb_pre, int apb1_pre, int apb2_pre, int adc_pre)
 {
-    volatile unsigned int* RCC_CR = (unsigned int *)(0x40021000);
-    volatile unsigned int* RCC_CFGR = (unsigned int *)(0x40021000 + 0x04);
-    volatile unsigned int* FLASH_ACR = (unsigned int *)(0x40022000 + 0x00);
+    volatile ui32* RCC_CR = (ui32 *)(0x40021000);
+    volatile ui32* RCC_CFGR = (ui32 *)(0x40021000 + 0x04);
+    volatile ui32* FLASH_ACR = (ui32 *)(0x40022000 + 0x00);
 
     const int HSI_FREQ = 8000000;
     const int HSE_FREQ = 8000000; //Change if different
@@ -40,6 +40,7 @@ void clk_config(enum CLKSRC source, bool pll_src_hse, bool pll_hse_div2, int pll
                 pll_input = HSI_FREQ / 2;
             }
             sysclk = pll_input * pll_mul;
+            pll_output = sysclk;
             hclk = sysclk / ahb_pre;
             break;
     }
@@ -183,9 +184,9 @@ void clk_config(enum CLKSRC source, bool pll_src_hse, bool pll_hse_div2, int pll
     return;
 }
 
-uint32_t get_hclock_frequency(void)
+ui32 get_hclock_frequency(void)
 {
-    volatile unsigned int* RCC_CFGR = (unsigned int *)(0x40021000 + 0x04);
+    volatile ui32* RCC_CFGR = (ui32 *)(0x40021000 + 0x04);
 
     const int HSE_FRQ = 8000000; //Change if different
     const int HSI_FRQ = 8000000;
@@ -213,9 +214,9 @@ uint32_t get_hclock_frequency(void)
     return PLLSRCFREQ * PLLMUL / AHBPRE;
 }
 
-uint32_t get_pclk1(void)
+ui32 get_pclk1(void)
 {
-    uint32_t hclk = get_hclock_frequency();
+   ui32 hclk = get_hclock_frequency();
 
     int ppre1;
     static const int PCLK1PrescTable[8] = {1,1,1,1,2,4,8,16};
@@ -224,9 +225,9 @@ uint32_t get_pclk1(void)
     return hclk / ppre1;
 }
 
-uint32_t get_pclk2(void)
+ui32 get_pclk2(void)
 {
-    uint32_t hclk = get_hclock_frequency();
+   ui32 hclk = get_hclock_frequency();
 
     int ppre2;
     static const int PCLK2PrescTable[8] = {1,1,1,1,2,4,8,16};

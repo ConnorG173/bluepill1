@@ -1,14 +1,14 @@
 
 #include "platform.h"
 
-extern uint32_t _estack;
+extern ui32 _estack;
 
-extern uint32_t _sdata;
-extern uint32_t _edata;
-extern uint32_t _sidata;
+extern ui32 _sdata;
+extern ui32 _edata;
+extern ui32 _sidata;
 
-extern uint32_t _sbss;
-extern uint32_t _ebss;
+extern ui32 _sbss;
+extern ui32 _ebss;
 
 void Reset_Handler(void); // Never Returns
 extern int main(void);
@@ -25,28 +25,55 @@ void DebugMonitor_Handler(void) __attribute__((weak, alias("Default_Handler")));
 void PendSV_Handler(void) __attribute__((weak, alias("Default_Handler")));
 void SysTick_Handler(void) __attribute__((weak, alias("Default_Handler")));
 
+void USART1_IRQHandler(void) __attribute__((weak, alias("Default_Handler")));
+void USART2_IRQHandler(void) __attribute__((weak, alias("Default_Handler")));
+void USART3_IRQHandler(void) __attribute__((weak, alias("Default_Handler")));
+
+
+// __attribute__((section(".vectors"), used)) // "Linker, put this in the ".vectors" section, used = no remove on -O2
+// void (* const vectors[])(void) = { // Constant (live in flash) Array of ptrs to functions that return void
+//     (void (*)(void))(&_estack),  // Initial stack pointer, [0]
+//     Reset_Handler,               // Reset, [1]
+//     NMI_Handler,                 // 2
+//     HardFault_Handler,           // 3
+//     MemManage_Handler,           // 4
+//     BusFault_Handler,            // 5
+//     UsageFault_Handler,          // 6
+//     0, 0, 0, 0,                  // 7–10 reserved
+//     SVCall_Handler,             // 11 SVCall
+//     DebugMonitor_Handler,             // 12 DebugMonitor
+//     0,                           // 13 reserved
+//     PendSV_Handler,             // 14 PendSV
+//     SysTick_Handler,              // 15 SysTick
+
+// };
+
 __attribute__((section(".vectors"), used)) // "Linker, put this in the ".vectors" section, used = no remove on -O2
 void (* const vectors[])(void) = { // Constant (live in flash) Array of ptrs to functions that return void
-    (void (*)(void))(&_estack),  // Initial stack pointer, [0]
-    Reset_Handler,               // Reset, [1]
-    NMI_Handler,                 // 2
-    HardFault_Handler,           // 3
-    MemManage_Handler,           // 4
-    BusFault_Handler,            // 5
-    UsageFault_Handler,          // 6
-    0, 0, 0, 0,                  // 7–10 reserved
-    SVCall_Handler,             // 11 SVCall
-    DebugMonitor_Handler,             // 12 DebugMonitor
-    0,                           // 13 reserved
-    PendSV_Handler,             // 14 PendSV
-    SysTick_Handler              // 15 SysTick      
+    /* Core exceptions */
+    [0]  = (void (*)(void))(&_estack), // Initial stack pointer
+    [1]  = Reset_Handler,
+    [2]  = NMI_Handler,
+    [3]  = HardFault_Handler,
+    [4]  = MemManage_Handler,
+    [5]  = BusFault_Handler,
+    [6]  = UsageFault_Handler,
+    [11] = SVCall_Handler,
+    [12] = DebugMonitor_Handler,
+    [14] = PendSV_Handler,
+    [15] = SysTick_Handler,
+
+    /* USART interrupts */
+    [53] = USART1_IRQHandler,
+    [54] = USART2_IRQHandler,
+    [55] = USART3_IRQHandler,
 };
 
 void Reset_Handler(void)
 {
     __asm__ volatile ("cpsid i"); //Disable All Interrupts
-    uint32_t *src;
-    uint32_t *dst;
+    ui32 *src;
+    ui32 *dst;
 
     src = &_sidata;
     for (dst = &_sdata; dst < &_edata; dst++) // Write initialized globals from flash into ram

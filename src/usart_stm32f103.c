@@ -2,6 +2,7 @@
 #include "usart_stm32f103.h"
 #include "clocks_stm32f103.h"
 
+volatile ui32 irqtester = 0;
 
 static void config_usart_clocks(USART_NUMBER usart_number)
 {
@@ -26,6 +27,7 @@ static void config_usart_clocks(USART_NUMBER usart_number)
         }
     }
 }
+
 
 static void config_usart_pins(USART_NUMBER usart_number, bool clock_used)
 {
@@ -63,21 +65,22 @@ static void config_usart_pins(USART_NUMBER usart_number, bool clock_used)
     }
 }
 
-static void set_USART_BRR(USART_NUMBER usart_number, uint32_t baud_rate)
+
+static void set_USART_BRR(USART_NUMBER usart_number, ui32 baud_rate)
 {
     /* 
     baud = pclk / 16 * USARTDIV 
     USARTDIV is an unsigned fixed point number that is coded on the USART_BRR register.
     USART_BRR: bits [31:16] -> reserved, [15:4] -> USART_DIV Mantissa, [3:0] -> USART_DIV Fraction (ex. [3:0] = 0011 -> 3/16)
     */
-    uint32_t pclk = 1;
+    ui32 pclk = 1;
     if (usart_number == USART_1) {
         pclk = get_pclk2();
     }
     else {
         pclk = get_pclk1();
     }
-    uint32_t USART_DIV = (pclk + baud_rate/2) / baud_rate; //The fixed point shift will do the /16 for us
+    ui32 USART_DIV = (pclk + baud_rate/2) / baud_rate; //The fixed point shift will do the /16 for us
     switch (usart_number)
     {
         case USART_1:
@@ -98,6 +101,7 @@ static void set_USART_BRR(USART_NUMBER usart_number, uint32_t baud_rate)
     }
 }
 
+
 static void set_basic_configs(USART_NUMBER usart_number, bool parity_used, bool parity_selection_odd)
 //Also clears rest of CR1
 {
@@ -109,7 +113,7 @@ static void set_basic_configs(USART_NUMBER usart_number, bool parity_used, bool 
             USART1->CR1 |= ((1 << 2) | (1 << 3));
             if (parity_used)
             {
-                USART1->CR1 |= ((1 << 10) | ((uint8_t)parity_selection_odd << 9));
+                USART1->CR1 |= ((1 << 10) | ((ui8)parity_selection_odd << 9));
             }
             USART1->CR1 |= (1 << 13);
             break;
@@ -120,7 +124,7 @@ static void set_basic_configs(USART_NUMBER usart_number, bool parity_used, bool 
             USART2->CR1 |= ((1 << 2) | (1 << 3));
             if (parity_used)
             {
-                USART2->CR1 |= ((1 << 10) | ((uint8_t)parity_selection_odd << 9));
+                USART2->CR1 |= ((1 << 10) | ((ui8)parity_selection_odd << 9));
             }
             USART2->CR1 |= (1 << 13);
             break;
@@ -131,13 +135,14 @@ static void set_basic_configs(USART_NUMBER usart_number, bool parity_used, bool 
             USART3->CR1 |= ((1 << 2) | (1 << 3));
             if (parity_used)
             {
-                USART3->CR1 |= ((1 << 10) | ((uint8_t)parity_selection_odd << 9));
+                USART3->CR1 |= ((1 << 10) | ((ui8)parity_selection_odd << 9));
             }
             USART3->CR1 |= (1 << 13);
             break;
         }
     }
 }
+
 
 static void set_word_length(USART_NUMBER usart_number, usart_wordlength_t wordlength)
 {
@@ -155,11 +160,17 @@ static void set_word_length(USART_NUMBER usart_number, usart_wordlength_t wordle
         {
             if (wordlength == LENGTH9B) { USART3->CR1 |= (1 << 12); }
         }
+        default:
+        {
+            __asm__("NOP");
+        }
     }
 }
 
-usart_t* usart_config(USART_NUMBER usart_number, usart_wordlength_t mode, uint32_t baud_rate_bps, bool clock_used, bool parity_used, bool parity_selection_odd)
+
+usart_t* usart_config(USART_NUMBER usart_number, usart_wordlength_t mode, ui32 baud_rate_bps, bool clock_used, bool parity_used, bool parity_selection_odd)
 // You can call this multiple times to re-configure a usart channel to new settings
+// !!! RETURNS NULL ON FAILURE !!!
 {
     config_usart_clocks(usart_number);
     config_usart_pins(usart_number, clock_used);
@@ -167,10 +178,16 @@ usart_t* usart_config(USART_NUMBER usart_number, usart_wordlength_t mode, uint32
     set_basic_configs(usart_number, parity_used, parity_selection_odd); //Also clears rest of CR1
     set_word_length(usart_number, mode);
 
+    if (usart_number != USART_1 || usart_number != USART_3 || usart_number != USART_3) {
+        return NULL;
+    }
+
     switch (usart_number)
     {
         case USART_1:
         {   
+            NVIC->IPR[37] |= USART1_IRQ_PRIO << 12;
+
             if (mode == LENGTH8B)
             {
             static ringbuf8_t ringbuf1tx;
@@ -199,6 +216,7 @@ usart_t* usart_config(USART_NUMBER usart_number, usart_wordlength_t mode, uint32
         }
         case USART_2:
         {   
+            NVIC->IPR[38] |= (ui8)((USART2_IRQ_PRIO << 4) & ((ui32)0xFFU));
             if (mode == LENGTH8B)
             {
             static ringbuf8_t ringbuf2tx;
@@ -227,6 +245,7 @@ usart_t* usart_config(USART_NUMBER usart_number, usart_wordlength_t mode, uint32
         }
         case USART_3:
         {   
+            NVIC->IPR[39] |= USART3_IRQ_PRIO << 28;
             if (mode == LENGTH8B)
             {
             static ringbuf8_t ringbuf3tx;
@@ -256,9 +275,25 @@ usart_t* usart_config(USART_NUMBER usart_number, usart_wordlength_t mode, uint32
     }
 }
 
-static inline bool rb8_push(ringbuf8_t* rb, uint8_t data)
+
+bool set_stop_bits(usart_t* u, float stopBits)
+// Reconfigures # of stop bits for already configured USART
 {
-    uint16_t next = rb->writeidx + 1;
+    ui32 stopBits_timesTen = (ui32)((stopBits + 0.01) * 10);
+    const ui8 stopbitsmasks[4] = {0b01, 0b00, 0b11, 0b10}; //{0.5, 1, 1.5, 2} stop bits
+    ui8 stopbitsmask = 0b00;
+    if (stopBits_timesTen != 5 || stopBits_timesTen != 10 || stopBits_timesTen != 15 || stopBits_timesTen != 20)
+    { return false; } //Error
+    stopbitsmask = stopbitsmasks[((stopBits_timesTen / 5) - 1)];
+    u->registers->CR2 &= ~(0b11 << 12); //reset existing stop bits
+    u->registers->CR2 |= (stopbitsmask << 12);
+    return true;
+}
+
+
+static inline bool rb8_push(ringbuf8_t* rb, ui8 data)
+{
+    ui16 next = rb->writeidx + 1;
     if (next >= USART_BUFFER8_SIZE) { next = 0; }
     if (next == rb->readidx) { return false; }
     rb->buffer[rb->writeidx] = data;
@@ -266,21 +301,23 @@ static inline bool rb8_push(ringbuf8_t* rb, uint8_t data)
     return true;
 }
 
-static inline bool rb8_pop(ringbuf8_t* rb, uint8_t* output)
+
+static inline bool rb8_pop(ringbuf8_t* rb, ui8* output)
 {
     if (rb->readidx == rb->writeidx) {return false;} // Empty
     *output = rb->buffer[rb->readidx];
 
-    uint16_t next = rb->readidx + 1;
+    ui16 next = rb->readidx + 1;
     if (next >= USART_BUFFER8_SIZE) {next = 0;}
     rb->readidx = next;
     return true;
 }
 
-static inline bool rb9_push(ringbuf9_t* rb, uint16_t data)
+
+static inline bool rb9_push(ringbuf9_t* rb, ui16 data)
 {
     data &= 0b000111111111; //Enforce 9-bit width
-    uint16_t next = rb->writeidx + 1;
+    ui16 next = rb->writeidx + 1;
     if (next >= USART_BUFFER9_SIZE) { next = 0; }
     if (next == rb->readidx) { return false; }
     rb->buffer[rb->writeidx] = data;
@@ -288,33 +325,36 @@ static inline bool rb9_push(ringbuf9_t* rb, uint16_t data)
     return true;
 }
 
-static inline bool rb9_pop(ringbuf9_t* rb, uint16_t* output)
+
+static inline bool rb9_pop(ringbuf9_t* rb, ui16* output)
 {
     if (rb->readidx == rb->writeidx) {return false;} // Empty
     *output = rb->buffer[rb->readidx] & 0b000111111111; // Enforce 9-bit width
 
-    uint16_t next = rb->readidx + 1;
+    ui16 next = rb->readidx + 1;
     if (next >= USART_BUFFER8_SIZE) {next = 0;}
     rb->readidx = next;
     return true;
 }
 
-bool usart_tx_push(usart_t* u, uint16_t data)
+
+bool usart_tx_push(usart_t* u, ui16 data)
 {
     __disable_irq();
     bool succeeded;
-    if (u->mode == LENGTH8B) { succeeded = rb8_push((ringbuf9_t*)u->tx, (uint8_t)data); }
+    if (u->mode == LENGTH8B) { succeeded = rb8_push((ringbuf8_t*)u->tx, (ui8)data); }
     else { succeeded = rb9_push((ringbuf9_t*)u->tx, data); }
     if (succeeded) { u->registers->CR1 |= (1 << 7); } // Enable TXE interrupt so we can handle the new data we just pushed
     __enable_irq();
     return succeeded;
 }
 
-bool usart_rx_pop(usart_t* u, uint16_t* output)
+
+bool usart_rx_pop(usart_t* u, ui16* output)
 {
     if (u->mode == LENGTH8B)
     {
-        uint8_t temp;
+        ui8 temp;
         if (!rb8_pop((ringbuf8_t*)u->rx, &temp)) { return false; }
         *output = temp;
     }
@@ -323,4 +363,15 @@ bool usart_rx_pop(usart_t* u, uint16_t* output)
         if (!rb9_pop((ringbuf9_t*)u->rx, output)) { return false; }
     }
     return true;
+}
+
+
+void usart_irq_handler(usart_t* u)
+{
+    
+}
+
+void USART1_IRQHandler(void)
+{
+
 }
