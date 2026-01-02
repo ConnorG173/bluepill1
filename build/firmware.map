@@ -3,7 +3,7 @@ Discarded input sections
 
  .data          0x00000000        0x0 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
  .bss           0x00000000        0x0 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
- .text          0x00000000      0x19c /home/consp/projects/bluepill1/build/gpio_stm32f103.o
+ .text          0x00000000      0x198 /home/consp/projects/bluepill1/build/gpio_stm32f103.o
  .data          0x00000000        0x0 /home/consp/projects/bluepill1/build/gpio_stm32f103.o
  .bss           0x00000000        0x0 /home/consp/projects/bluepill1/build/gpio_stm32f103.o
  .comment       0x00000000       0x27 /home/consp/projects/bluepill1/build/gpio_stm32f103.o
@@ -18,12 +18,6 @@ Discarded input sections
  .bss           0x00000000        0x0 /home/consp/projects/bluepill1/build/system_stm32f1xx.o
  .data          0x00000000        0x0 /home/consp/projects/bluepill1/build/systick_stm32f103.o
  .rodata        0x00000000        0x4 /home/consp/projects/bluepill1/build/systick_stm32f103.o
- .text          0x00000000      0x6fc /home/consp/projects/bluepill1/build/usart_stm32f103.o
- .data          0x00000000        0x0 /home/consp/projects/bluepill1/build/usart_stm32f103.o
- .bss           0x00000000      0x990 /home/consp/projects/bluepill1/build/usart_stm32f103.o
- .comment       0x00000000       0x27 /home/consp/projects/bluepill1/build/usart_stm32f103.o
- .ARM.attributes
-                0x00000000       0x2d /home/consp/projects/bluepill1/build/usart_stm32f103.o
 
 Memory Configuration
 
@@ -41,94 +35,105 @@ Linker script and memory map
  .vectors       0x08000000       0xe0 /home/consp/projects/bluepill1/build/startup.o
                 0x08000000                vectors
 
-.text           0x080000e0      0xe3c
+.text           0x080000e0     0x1804
                 0x080000e0                        _stext = .
  *(.text*)
- .text          0x080000e0      0x810 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
+ .text          0x080000e0      0x824 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
                 0x080000e0                clk_config
-                0x0800079a                get_hclock_frequency
-                0x08000878                get_pclk1
-                0x080008b4                get_pclk2
- .text          0x080008f0       0x30 /home/consp/projects/bluepill1/build/init.o
-                0x080008f0                stdinit
- .text          0x08000920       0x8c /home/consp/projects/bluepill1/build/main.o
-                0x08000920                main
- .text          0x080009ac       0x6c /home/consp/projects/bluepill1/build/startup.o
-                0x080009ac                Reset_Handler
-                0x08000a10                SVCall_Handler
-                0x08000a10                HardFault_Handler
-                0x08000a10                PendSV_Handler
-                0x08000a10                NMI_Handler
-                0x08000a10                UsageFault_Handler
-                0x08000a10                USART3_IRQHandler
-                0x08000a10                Default_Handler
-                0x08000a10                MemManage_Handler
-                0x08000a10                USART2_IRQHandler
-                0x08000a10                BusFault_Handler
-                0x08000a10                USART1_IRQHandler
-                0x08000a10                DebugMonitor_Handler
- .text          0x08000a18       0xf0 /home/consp/projects/bluepill1/build/system_stm32f1xx.o
-                0x08000a18                SystemInit
-                0x08000a24                SystemCoreClockUpdate
- .text          0x08000b08      0x37c /home/consp/projects/bluepill1/build/systick_stm32f103.o
-                0x08000b08                calculate_onems_cycles
-                0x08000b2c                SysTick_Handler
-                0x08000b48                systick_init
-                0x08000bbc                systick_start
-                0x08000bd8                systick_stop
-                0x08000bf4                systime_ticks_now
-                0x08000c08                systime_ticks_elapsed
-                0x08000c28                systime_ticks_expired
-                0x08000c4e                delay_ticks
-                0x08000c7e                subtick_time_now
-                0x08000d08                subtick_time_elapsed
-                0x08000d7c                subtick_time_expired
-                0x08000dc4                delay_subtick_ticks
-                0x08000dfe                gen_duration_t
-                0x08000e5c                ticks_to_ms
+                0x080007ae                get_hclock_frequency
+                0x0800088c                get_pclk1
+                0x080008c8                get_pclk2
+ .text          0x08000904       0x30 /home/consp/projects/bluepill1/build/init.o
+                0x08000904                stdinit
+ .text          0x08000934       0x64 /home/consp/projects/bluepill1/build/main.o
+                0x08000934                main
+ .text          0x08000998       0x6c /home/consp/projects/bluepill1/build/startup.o
+                0x08000998                Reset_Handler
+                0x080009fc                SVCall_Handler
+                0x080009fc                HardFault_Handler
+                0x080009fc                PendSV_Handler
+                0x080009fc                NMI_Handler
+                0x080009fc                UsageFault_Handler
+                0x080009fc                Default_Handler
+                0x080009fc                MemManage_Handler
+                0x080009fc                BusFault_Handler
+                0x080009fc                DebugMonitor_Handler
+ .text          0x08000a04       0xf0 /home/consp/projects/bluepill1/build/system_stm32f1xx.o
+                0x08000a04                SystemInit
+                0x08000a10                SystemCoreClockUpdate
+ .text          0x08000af4      0x37c /home/consp/projects/bluepill1/build/systick_stm32f103.o
+                0x08000af4                calculate_onems_cycles
+                0x08000b18                SysTick_Handler
+                0x08000b34                systick_init
+                0x08000ba8                systick_start
+                0x08000bc4                systick_stop
+                0x08000be0                systime_ticks_now
+                0x08000bf4                systime_ticks_elapsed
+                0x08000c14                systime_ticks_expired
+                0x08000c3a                delay_ticks
+                0x08000c6a                subtick_time_now
+                0x08000cf4                subtick_time_elapsed
+                0x08000d68                subtick_time_expired
+                0x08000db0                delay_subtick_ticks
+                0x08000dea                gen_duration_t
+                0x08000e48                ticks_to_ms
+ .text          0x08000e70      0x9dc /home/consp/projects/bluepill1/build/usart_stm32f103.o
+                0x08001224                usart_config
+                0x080013d0                set_stop_bits
+                0x080015da                usart_tx_push
+                0x0800163e                usart_rx_pop
+                0x080016a0                usart_irq_handler
+                0x08001810                USART1_IRQHandler
+                0x08001824                USART2_IRQHandler
+                0x08001838                USART3_IRQHandler
  *(.rodata*)
- .rodata        0x08000e84       0x80 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
- .rodata        0x08000f04       0x18 /home/consp/projects/bluepill1/build/system_stm32f1xx.o
-                0x08000f04                AHBPrescTable
-                0x08000f14                APBPrescTable
-                0x08000f1c                        _etext = .
+ .rodata        0x0800184c       0x80 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
+ .rodata        0x080018cc       0x18 /home/consp/projects/bluepill1/build/system_stm32f1xx.o
+                0x080018cc                AHBPrescTable
+                0x080018dc                APBPrescTable
+                0x080018e4                        _etext = .
 
-.glue_7         0x08000f1c        0x0
- .glue_7        0x08000f1c        0x0 linker stubs
+.glue_7         0x080018e4        0x0
+ .glue_7        0x080018e4        0x0 linker stubs
 
-.glue_7t        0x08000f1c        0x0
- .glue_7t       0x08000f1c        0x0 linker stubs
+.glue_7t        0x080018e4        0x0
+ .glue_7t       0x080018e4        0x0 linker stubs
 
-.vfp11_veneer   0x08000f1c        0x0
- .vfp11_veneer  0x08000f1c        0x0 linker stubs
+.vfp11_veneer   0x080018e4        0x0
+ .vfp11_veneer  0x080018e4        0x0 linker stubs
 
-.v4_bx          0x08000f1c        0x0
- .v4_bx         0x08000f1c        0x0 linker stubs
+.v4_bx          0x080018e4        0x0
+ .v4_bx         0x080018e4        0x0 linker stubs
 
-.iplt           0x08000f1c        0x0
- .iplt          0x08000f1c        0x0 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
+.iplt           0x080018e4        0x0
+ .iplt          0x080018e4        0x0 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
 
-.rel.dyn        0x08000f1c        0x0
- .rel.iplt      0x08000f1c        0x0 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
+.rel.dyn        0x080018e4        0x0
+ .rel.iplt      0x080018e4        0x0 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
 
-.data           0x20000000        0x4 load address 0x08000f1c
+.data           0x20000000       0x58 load address 0x080018e4
                 0x20000000                        _sdata = .
  *(.data*)
  .data          0x20000000        0x4 /home/consp/projects/bluepill1/build/system_stm32f1xx.o
                 0x20000000                SystemCoreClock
-                0x20000004                        _edata = .
-                0x08000f1c                        _sidata = LOADADDR (.data)
+ .data          0x20000004       0x54 /home/consp/projects/bluepill1/build/usart_stm32f103.o
+                0x2000004c                usart1
+                0x20000050                usart2
+                0x20000054                usart3
+                0x20000058                        _edata = .
+                0x080018e4                        _sidata = LOADADDR (.data)
 
-.igot.plt       0x20000004        0x0 load address 0x08000f20
- .igot.plt      0x20000004        0x0 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
+.igot.plt       0x20000058        0x0 load address 0x0800193c
+ .igot.plt      0x20000058        0x0 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
 
-.bss            0x20000004        0x4 load address 0x08000f20
-                0x20000004                        _sbss = .
+.bss            0x20000058      0x988 load address 0x0800193c
+                0x20000058                        _sbss = .
  *(.bss*)
- .bss           0x20000004        0x4 /home/consp/projects/bluepill1/build/systick_stm32f103.o
-                0x20000004                totalticks
+ .bss           0x20000058        0x4 /home/consp/projects/bluepill1/build/systick_stm32f103.o
+                0x20000058                totalticks
+ .bss           0x2000005c      0x984 /home/consp/projects/bluepill1/build/usart_stm32f103.o
  *(COMMON)
-                0x20000008                        _ebss = .
+                0x200009e0                        _ebss = .
                 0x00000001                        ASSERT ((ORIGIN (flash) == 0x8000000), FLASH ORIGIN WRONG)
                 0x20005000                        _estack = (ORIGIN (sram) + LENGTH (sram))
 LOAD /home/consp/projects/bluepill1/build/clocks_stm32f103.o
@@ -150,6 +155,7 @@ LOAD linker stubs
  .comment       0x00000026       0x27 /home/consp/projects/bluepill1/build/startup.o
  .comment       0x00000026       0x27 /home/consp/projects/bluepill1/build/system_stm32f1xx.o
  .comment       0x00000026       0x27 /home/consp/projects/bluepill1/build/systick_stm32f103.o
+ .comment       0x00000026       0x27 /home/consp/projects/bluepill1/build/usart_stm32f103.o
 
 .ARM.attributes
                 0x00000000       0x2d
@@ -165,3 +171,5 @@ LOAD linker stubs
                 0x000000b4       0x2d /home/consp/projects/bluepill1/build/system_stm32f1xx.o
  .ARM.attributes
                 0x000000e1       0x2d /home/consp/projects/bluepill1/build/systick_stm32f103.o
+ .ARM.attributes
+                0x0000010e       0x2d /home/consp/projects/bluepill1/build/usart_stm32f103.o
