@@ -7,7 +7,7 @@ set -euo pipefail
 # ------------------------------------------------------------
 # Toolchain
 # ------------------------------------------------------------
-LD="arm-none-eabi-ld"
+LD="arm-none-eabi-gcc"
 OBJCOPY="arm-none-eabi-objcopy"
 
 # ------------------------------------------------------------
@@ -72,12 +72,16 @@ echo
 # Link
 # ------------------------------------------------------------
 "$LD" \
+    -mcpu=cortex-m3 \
+    -mthumb \
+    -mfloat-abi=soft \
+    -nostdlib \
     -T "$LINKER_SCRIPT" \
-    --gc-sections \
-    -Map="$MAP" \
+    -Wl,--gc-sections \
+    -Wl,-Map="$MAP" \
     "${OBJECTS[@]}" \
-    -o "$ELF" \
-    -lgcc 
+    -lgcc \
+    -o "$ELF"
 
 # ------------------------------------------------------------
 # Convert ELF -> BIN

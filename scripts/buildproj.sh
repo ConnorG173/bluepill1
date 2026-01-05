@@ -5,6 +5,6 @@ set -euo pipefail
 # arg 2 = .o file dir
 
 ./compco.sh $1 $2
-./newbuild.sh $2
+./buildgcc.sh $2
 
 echo "Project Built"

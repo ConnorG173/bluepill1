@@ -1,8 +1,21 @@
+Archive member included to satisfy reference by file (symbol)
+
+/usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+                              /home/consp/projects/bluepill1/build/main.o (__aeabi_dadd)
+/usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+                              /home/consp/projects/bluepill1/build/main.o (__aeabi_d2f)
+/usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+                              /home/consp/projects/bluepill1/build/main.o (__aeabi_fcmpgt)
 
 Discarded input sections
 
+ .text          0x00000000      0x5e4 /home/consp/projects/bluepill1/build/actim_stm32f103.o
+ .data          0x00000000        0x4 /home/consp/projects/bluepill1/build/actim_stm32f103.o
+ .bss           0x00000000       0x18 /home/consp/projects/bluepill1/build/actim_stm32f103.o
+ .comment       0x00000000       0x27 /home/consp/projects/bluepill1/build/actim_stm32f103.o
+ .ARM.attributes
+                0x00000000       0x2d /home/consp/projects/bluepill1/build/actim_stm32f103.o
  .data          0x00000000        0x0 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
- .bss           0x00000000        0x0 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
  .text          0x00000000      0x198 /home/consp/projects/bluepill1/build/gpio_stm32f103.o
  .data          0x00000000        0x0 /home/consp/projects/bluepill1/build/gpio_stm32f103.o
  .bss           0x00000000        0x0 /home/consp/projects/bluepill1/build/gpio_stm32f103.o
@@ -18,6 +31,14 @@ Discarded input sections
  .bss           0x00000000        0x0 /home/consp/projects/bluepill1/build/system_stm32f1xx.o
  .data          0x00000000        0x0 /home/consp/projects/bluepill1/build/systick_stm32f103.o
  .rodata        0x00000000        0x4 /home/consp/projects/bluepill1/build/systick_stm32f103.o
+ .data          0x00000000        0x0 /home/consp/projects/bluepill1/build/uprintf.o
+ .bss           0x00000000        0x0 /home/consp/projects/bluepill1/build/uprintf.o
+ .data          0x00000000        0x0 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+ .bss           0x00000000        0x0 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+ .data          0x00000000        0x0 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+ .bss           0x00000000        0x0 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+ .data          0x00000000        0x0 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+ .bss           0x00000000        0x0 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
 
 Memory Configuration
 
@@ -28,6 +49,17 @@ sram             0x20000000         0x00005000         rw
 
 Linker script and memory map
 
+LOAD /home/consp/projects/bluepill1/build/actim_stm32f103.o
+LOAD /home/consp/projects/bluepill1/build/clocks_stm32f103.o
+LOAD /home/consp/projects/bluepill1/build/gpio_stm32f103.o
+LOAD /home/consp/projects/bluepill1/build/init.o
+LOAD /home/consp/projects/bluepill1/build/main.o
+LOAD /home/consp/projects/bluepill1/build/startup.o
+LOAD /home/consp/projects/bluepill1/build/system_stm32f1xx.o
+LOAD /home/consp/projects/bluepill1/build/systick_stm32f103.o
+LOAD /home/consp/projects/bluepill1/build/uprintf.o
+LOAD /home/consp/projects/bluepill1/build/usart_stm32f103.o
+LOAD /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a
                 0x08000000                        . = ORIGIN (flash)
 
 .vectors        0x08000000       0xe0
@@ -35,83 +67,132 @@ Linker script and memory map
  .vectors       0x08000000       0xe0 /home/consp/projects/bluepill1/build/startup.o
                 0x08000000                vectors
 
-.text           0x080000e0     0x1804
+.text           0x080000e0     0x23fc
                 0x080000e0                        _stext = .
  *(.text*)
- .text          0x080000e0      0x824 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
+ .text          0x080000e0      0x860 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
                 0x080000e0                clk_config
-                0x080007ae                get_hclock_frequency
-                0x0800088c                get_pclk1
-                0x080008c8                get_pclk2
- .text          0x08000904       0x30 /home/consp/projects/bluepill1/build/init.o
-                0x08000904                stdinit
- .text          0x08000934       0x64 /home/consp/projects/bluepill1/build/main.o
-                0x08000934                main
- .text          0x08000998       0x6c /home/consp/projects/bluepill1/build/startup.o
-                0x08000998                Reset_Handler
-                0x080009fc                SVCall_Handler
-                0x080009fc                HardFault_Handler
-                0x080009fc                PendSV_Handler
-                0x080009fc                NMI_Handler
-                0x080009fc                UsageFault_Handler
-                0x080009fc                Default_Handler
-                0x080009fc                MemManage_Handler
-                0x080009fc                BusFault_Handler
-                0x080009fc                DebugMonitor_Handler
- .text          0x08000a04       0xf0 /home/consp/projects/bluepill1/build/system_stm32f1xx.o
-                0x08000a04                SystemInit
-                0x08000a10                SystemCoreClockUpdate
- .text          0x08000af4      0x37c /home/consp/projects/bluepill1/build/systick_stm32f103.o
-                0x08000af4                calculate_onems_cycles
-                0x08000b18                SysTick_Handler
-                0x08000b34                systick_init
-                0x08000ba8                systick_start
-                0x08000bc4                systick_stop
-                0x08000be0                systime_ticks_now
-                0x08000bf4                systime_ticks_elapsed
-                0x08000c14                systime_ticks_expired
-                0x08000c3a                delay_ticks
-                0x08000c6a                subtick_time_now
-                0x08000cf4                subtick_time_elapsed
-                0x08000d68                subtick_time_expired
-                0x08000db0                delay_subtick_ticks
-                0x08000dea                gen_duration_t
-                0x08000e48                ticks_to_ms
- .text          0x08000e70      0x9dc /home/consp/projects/bluepill1/build/usart_stm32f103.o
-                0x08001224                usart_config
-                0x080013d0                set_stop_bits
-                0x080015da                usart_tx_push
-                0x0800163e                usart_rx_pop
-                0x080016a0                usart_irq_handler
-                0x08001810                USART1_IRQHandler
-                0x08001824                USART2_IRQHandler
-                0x08001838                USART3_IRQHandler
+                0x080007ea                get_hclock
+                0x080008c8                get_pclk1
+                0x08000904                get_pclk2
+ .text          0x08000940       0x30 /home/consp/projects/bluepill1/build/init.o
+                0x08000940                stdinit
+ .text          0x08000970       0xa4 /home/consp/projects/bluepill1/build/main.o
+                0x08000970                main
+ .text          0x08000a14       0x6c /home/consp/projects/bluepill1/build/startup.o
+                0x08000a14                Reset_Handler
+                0x08000a78                SVCall_Handler
+                0x08000a78                HardFault_Handler
+                0x08000a78                PendSV_Handler
+                0x08000a78                NMI_Handler
+                0x08000a78                UsageFault_Handler
+                0x08000a78                Default_Handler
+                0x08000a78                MemManage_Handler
+                0x08000a78                BusFault_Handler
+                0x08000a78                DebugMonitor_Handler
+ .text          0x08000a80       0xf0 /home/consp/projects/bluepill1/build/system_stm32f1xx.o
+                0x08000a80                SystemInit
+                0x08000a8c                SystemCoreClockUpdate
+ .text          0x08000b70      0x37c /home/consp/projects/bluepill1/build/systick_stm32f103.o
+                0x08000b70                calculate_onems_cycles
+                0x08000b94                SysTick_Handler
+                0x08000bb0                systick_init
+                0x08000c24                systick_start
+                0x08000c40                systick_stop
+                0x08000c5c                systime_ticks_now
+                0x08000c70                systime_ticks_elapsed
+                0x08000c90                systime_ticks_expired
+                0x08000cb6                delay_ticks
+                0x08000ce6                subtick_time_now
+                0x08000d70                subtick_time_elapsed
+                0x08000de4                subtick_time_expired
+                0x08000e2c                delay_subtick_ticks
+                0x08000e66                gen_duration_t
+                0x08000ec4                ticks_to_ms
+ .text          0x08000eec      0x520 /home/consp/projects/bluepill1/build/uprintf.o
+                0x08000eec                push_char
+                0x08000f0e                push_string
+                0x08000f60                push_int32
+                0x08001048                push_uint32
+                0x0800110c                push_hex
+                0x080011f0                handle_format_spec
+                0x08001362                uvprintf
+                0x080013de                uprintf
+ .text          0x0800140c      0xac0 /home/consp/projects/bluepill1/build/usart_stm32f103.o
+                0x080017c0                usart_config
+                0x0800196c                set_stop_bits
+                0x08001b76                tx_buffer_full
+                0x08001be8                rx_buffer_full
+                0x08001c5a                usart_tx_push
+                0x08001cbe                usart_rx_pop
+                0x08001d20                usart_irq_handler
+                0x08001e90                USART1_IRQHandler
+                0x08001ea4                USART2_IRQHandler
+                0x08001eb8                USART3_IRQHandler
+ .text          0x08001ecc      0x378 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+                0x08001ecc                __aeabi_drsub
+                0x08001ed4                __aeabi_dsub
+                0x08001ed4                __subdf3
+                0x08001ed8                __adddf3
+                0x08001ed8                __aeabi_dadd
+                0x08002150                __aeabi_ui2d
+                0x08002150                __floatunsidf
+                0x08002170                __floatsidf
+                0x08002170                __aeabi_i2d
+                0x08002194                __extendsfdf2
+                0x08002194                __aeabi_f2d
+                0x080021d8                __aeabi_ul2d
+                0x080021d8                __floatundidf
+                0x080021e8                __floatdidf
+                0x080021e8                __aeabi_l2d
+ .text          0x08002244       0xa0 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+                0x08002244                __aeabi_d2f
+                0x08002244                __truncdfsf2
+ .text          0x080022e4       0xec /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+                0x080022e4                __gtsf2
+                0x080022e4                __gesf2
+                0x080022ec                __lesf2
+                0x080022ec                __ltsf2
+                0x080022f4                __nesf2
+                0x080022f4                __eqsf2
+                0x080022f4                __cmpsf2
+                0x08002354                __aeabi_cfrcmple
+                0x0800235c                __aeabi_cfcmple
+                0x0800235c                __aeabi_cfcmpeq
+                0x0800236c                __aeabi_fcmpeq
+                0x08002380                __aeabi_fcmplt
+                0x08002394                __aeabi_fcmple
+                0x080023a8                __aeabi_fcmpge
+                0x080023bc                __aeabi_fcmpgt
  *(.rodata*)
- .rodata        0x0800184c       0x80 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
- .rodata        0x080018cc       0x18 /home/consp/projects/bluepill1/build/system_stm32f1xx.o
-                0x080018cc                AHBPrescTable
-                0x080018dc                APBPrescTable
-                0x080018e4                        _etext = .
+ .rodata        0x080023d0       0x80 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
+ .rodata        0x08002450       0x23 /home/consp/projects/bluepill1/build/main.o
+ *fill*         0x08002473        0x1 
+ .rodata        0x08002474       0x18 /home/consp/projects/bluepill1/build/system_stm32f1xx.o
+                0x08002474                AHBPrescTable
+                0x08002484                APBPrescTable
+ .rodata        0x0800248c       0x50 /home/consp/projects/bluepill1/build/uprintf.o
+                0x080024dc                        _etext = .
 
-.glue_7         0x080018e4        0x0
- .glue_7        0x080018e4        0x0 linker stubs
+.glue_7         0x080024dc        0x0
+ .glue_7        0x080024dc        0x0 linker stubs
 
-.glue_7t        0x080018e4        0x0
- .glue_7t       0x080018e4        0x0 linker stubs
+.glue_7t        0x080024dc        0x0
+ .glue_7t       0x080024dc        0x0 linker stubs
 
-.vfp11_veneer   0x080018e4        0x0
- .vfp11_veneer  0x080018e4        0x0 linker stubs
+.vfp11_veneer   0x080024dc        0x0
+ .vfp11_veneer  0x080024dc        0x0 linker stubs
 
-.v4_bx          0x080018e4        0x0
- .v4_bx         0x080018e4        0x0 linker stubs
+.v4_bx          0x080024dc        0x0
+ .v4_bx         0x080024dc        0x0 linker stubs
 
-.iplt           0x080018e4        0x0
- .iplt          0x080018e4        0x0 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
+.iplt           0x080024dc        0x0
+ .iplt          0x080024dc        0x0 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
 
-.rel.dyn        0x080018e4        0x0
- .rel.iplt      0x080018e4        0x0 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
+.rel.dyn        0x080024dc        0x0
+ .rel.iplt      0x080024dc        0x0 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
 
-.data           0x20000000       0x58 load address 0x080018e4
+.data           0x20000000       0x58 load address 0x080024dc
                 0x20000000                        _sdata = .
  *(.data*)
  .data          0x20000000        0x4 /home/consp/projects/bluepill1/build/system_stm32f1xx.o
@@ -121,29 +202,22 @@ Linker script and memory map
                 0x20000050                usart2
                 0x20000054                usart3
                 0x20000058                        _edata = .
-                0x080018e4                        _sidata = LOADADDR (.data)
+                0x080024dc                        _sidata = LOADADDR (.data)
 
-.igot.plt       0x20000058        0x0 load address 0x0800193c
+.igot.plt       0x20000058        0x0 load address 0x08002534
  .igot.plt      0x20000058        0x0 /home/consp/projects/bluepill1/build/clocks_stm32f103.o
 
-.bss            0x20000058      0x988 load address 0x0800193c
+.bss            0x20000058      0x9a4 load address 0x08002534
                 0x20000058                        _sbss = .
  *(.bss*)
- .bss           0x20000058        0x4 /home/consp/projects/bluepill1/build/systick_stm32f103.o
-                0x20000058                totalticks
- .bss           0x2000005c      0x984 /home/consp/projects/bluepill1/build/usart_stm32f103.o
+ .bss           0x20000058       0x1c /home/consp/projects/bluepill1/build/clocks_stm32f103.o
+ .bss           0x20000074        0x4 /home/consp/projects/bluepill1/build/systick_stm32f103.o
+                0x20000074                totalticks
+ .bss           0x20000078      0x984 /home/consp/projects/bluepill1/build/usart_stm32f103.o
  *(COMMON)
-                0x200009e0                        _ebss = .
+                0x200009fc                        _ebss = .
                 0x00000001                        ASSERT ((ORIGIN (flash) == 0x8000000), FLASH ORIGIN WRONG)
                 0x20005000                        _estack = (ORIGIN (sram) + LENGTH (sram))
-LOAD /home/consp/projects/bluepill1/build/clocks_stm32f103.o
-LOAD /home/consp/projects/bluepill1/build/gpio_stm32f103.o
-LOAD /home/consp/projects/bluepill1/build/init.o
-LOAD /home/consp/projects/bluepill1/build/main.o
-LOAD /home/consp/projects/bluepill1/build/startup.o
-LOAD /home/consp/projects/bluepill1/build/system_stm32f1xx.o
-LOAD /home/consp/projects/bluepill1/build/systick_stm32f103.o
-LOAD /home/consp/projects/bluepill1/build/usart_stm32f103.o
 OUTPUT(/home/consp/projects/bluepill1/build/firmware.elf elf32-littlearm)
 LOAD linker stubs
 
@@ -155,6 +229,7 @@ LOAD linker stubs
  .comment       0x00000026       0x27 /home/consp/projects/bluepill1/build/startup.o
  .comment       0x00000026       0x27 /home/consp/projects/bluepill1/build/system_stm32f1xx.o
  .comment       0x00000026       0x27 /home/consp/projects/bluepill1/build/systick_stm32f103.o
+ .comment       0x00000026       0x27 /home/consp/projects/bluepill1/build/uprintf.o
  .comment       0x00000026       0x27 /home/consp/projects/bluepill1/build/usart_stm32f103.o
 
 .ARM.attributes
@@ -172,4 +247,56 @@ LOAD linker stubs
  .ARM.attributes
                 0x000000e1       0x2d /home/consp/projects/bluepill1/build/systick_stm32f103.o
  .ARM.attributes
-                0x0000010e       0x2d /home/consp/projects/bluepill1/build/usart_stm32f103.o
+                0x0000010e       0x2d /home/consp/projects/bluepill1/build/uprintf.o
+ .ARM.attributes
+                0x0000013b       0x2d /home/consp/projects/bluepill1/build/usart_stm32f103.o
+ .ARM.attributes
+                0x00000168       0x1d /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+ .ARM.attributes
+                0x00000185       0x1d /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+ .ARM.attributes
+                0x000001a2       0x1d /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+
+.debug_line     0x00000000      0x27f
+ .debug_line    0x00000000      0x16f /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+ .debug_line    0x0000016f       0x76 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+ .debug_line    0x000001e5       0x9a /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+
+.debug_line_str
+                0x00000000       0xa5
+ .debug_line_str
+                0x00000000       0xa5 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+                                 0x98 (size before relaxing)
+ .debug_line_str
+                0x000000a5       0x98 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+ .debug_line_str
+                0x000000a5       0x98 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+
+.debug_info     0x00000000      0x1ed
+ .debug_info    0x00000000       0xd3 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+ .debug_info    0x000000d3       0x3f /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+ .debug_info    0x00000112       0xdb /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+
+.debug_abbrev   0x00000000       0x78
+ .debug_abbrev  0x00000000       0x28 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+ .debug_abbrev  0x00000028       0x28 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+ .debug_abbrev  0x00000050       0x28 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+
+.debug_aranges  0x00000000       0x60
+ .debug_aranges
+                0x00000000       0x20 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+ .debug_aranges
+                0x00000020       0x20 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+ .debug_aranges
+                0x00000040       0x20 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+
+.debug_str      0x00000000      0x24f
+ .debug_str     0x00000000      0x24f /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+                                0x150 (size before relaxing)
+ .debug_str     0x0000024f       0xbd /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+ .debug_str     0x0000024f      0x159 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)
+
+.debug_frame    0x00000000      0x198
+ .debug_frame   0x00000000       0xac /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_addsubdf3.o)
+ .debug_frame   0x000000ac       0x24 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_truncdfsf2.o)
+ .debug_frame   0x000000d0       0xc8 /usr/lib/gcc/arm-none-eabi/13.2.1/thumb/v7-m/nofp/libgcc.a(_arm_cmpsf2.o)

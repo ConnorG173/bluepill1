@@ -27,7 +27,7 @@ void SysTick_Handler(void) //Should override weak def in startup.c
 bool systick_init(void) //more than 1 call is undefined behavior
 {
     systick_stop();
-    ui32 reloadval = tickperiodms * calculate_onems_cycles(get_hclock_frequency()) - 1; //Period of N cycles = N - 1 reload
+    ui32 reloadval = tickperiodms * calculate_onems_cycles(get_hclock()) - 1; //Period of N cycles = N - 1 reload
 
     if (reloadval > 0x00FFFFFFUL || reloadval == 0x0UL) { return 0; } // reloadval outside range 1->2^24
     STK_LOAD = reloadval; // Set Reload Register

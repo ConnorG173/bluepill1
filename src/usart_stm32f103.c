@@ -2,6 +2,7 @@
 #include "usart_stm32f103.h"
 #include "clocks_stm32f103.h"
 
+
 // Declare usart objects
 static usart_t usart1_t = { .id = USART_1 };
 static usart_t usart2_t = { .id = USART_2 };
@@ -339,6 +340,50 @@ static inline bool rb9_pop(ringbuf9_t* rb, ui16* output)
 }
 
 
+bool tx_buffer_full(usart_t* u)
+{
+    usart_wordlength_t mode = u->mode;
+    ui16 next;
+    ui16 readidx;
+    if (mode == LENGTH8B) 
+    { 
+        next = ((ringbuf8_t*)u->tx)->writeidx + 1;
+        if (next >= USART_BUFFER8_SIZE) { next = 0; }
+        readidx = ((ringbuf8_t*)u->tx)->readidx;
+    }
+    else 
+    { 
+        next = ((ringbuf9_t*)u->tx)->writeidx + 1;
+        if (next >= USART_BUFFER9_SIZE) { next = 0; }
+        readidx = ((ringbuf9_t*)u->tx)->readidx;
+    }
+    if (next == readidx) { return true; }
+    return false;
+}
+
+
+bool rx_buffer_full(usart_t* u)
+{
+    usart_wordlength_t mode = u->mode;
+    ui16 next;
+    ui16 readidx;
+    if (mode == LENGTH8B) 
+    { 
+        next = ((ringbuf8_t*)u->rx)->writeidx + 1;
+        if (next >= USART_BUFFER8_SIZE) { next = 0; }
+        readidx = ((ringbuf8_t*)u->rx)->readidx;
+    }
+    else 
+    { 
+        next = ((ringbuf9_t*)u->rx)->writeidx + 1;
+        if (next >= USART_BUFFER9_SIZE) { next = 0; }
+        readidx = ((ringbuf9_t*)u->rx)->readidx;
+    }
+    if (next == readidx) { return true; }
+    return false;
+}
+
+
 bool usart_tx_push(usart_t* u, ui16 data)
 {
     __disable_irq();
@@ -365,7 +410,6 @@ bool usart_rx_pop(usart_t* u, ui16* output)
     }
     return true;
 }
-
 
 void usart_irq_handler(usart_t* u)
 {

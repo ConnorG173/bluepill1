@@ -2,6 +2,14 @@
 #include "platform.h"
 #include "clocks_stm32f103.h"
 
+static int pll_input = 0;
+static int pll_output = 0;
+static int sysclk;
+static int hclk = 0;
+static int pclk1 = 0;
+static int pclk2 = 0;
+static int adcclk = 0;
+
 void clk_config(enum CLKSRC source, bool pll_src_hse, bool pll_hse_div2, int pll_mul, int ahb_pre, int apb1_pre, int apb2_pre, int adc_pre)
 {
     volatile ui32* RCC_CR = (ui32 *)(0x40021000);
@@ -10,14 +18,6 @@ void clk_config(enum CLKSRC source, bool pll_src_hse, bool pll_hse_div2, int pll
 
     const int HSI_FREQ = 8000000;
     const int HSE_FREQ = 8000000; //Change if different
-
-    int pll_input = 0;
-    int pll_output = 0;
-    int sysclk;
-    int hclk = 0;
-    int pclk1 = 0;
-    int pclk2 = 0;
-    int adcclk = 0;
 
     switch (source)
     {
@@ -184,7 +184,7 @@ void clk_config(enum CLKSRC source, bool pll_src_hse, bool pll_hse_div2, int pll
     return;
 }
 
-ui32 get_hclock_frequency(void)
+ui32 get_hclock(void)
 {
     volatile ui32* RCC_CFGR = (ui32 *)(0x40021000 + 0x04);
 
@@ -216,7 +216,7 @@ ui32 get_hclock_frequency(void)
 
 ui32 get_pclk1(void)
 {
-   ui32 hclk = get_hclock_frequency();
+   ui32 hclk = get_hclock();
 
     int ppre1;
     static const int PCLK1PrescTable[8] = {1,1,1,1,2,4,8,16};
@@ -227,7 +227,7 @@ ui32 get_pclk1(void)
 
 ui32 get_pclk2(void)
 {
-   ui32 hclk = get_hclock_frequency();
+   ui32 hclk = get_hclock();
 
     int ppre2;
     static const int PCLK2PrescTable[8] = {1,1,1,1,2,4,8,16};

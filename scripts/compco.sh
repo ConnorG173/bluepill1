@@ -27,6 +27,7 @@ COMPILE=arm-none-eabi-gcc
 CFLAGS=(
     -mcpu=cortex-m3
     -mthumb
+    -mfloat-abi=soft
     -ffreestanding
     -Wall
     -Wextra

@@ -3,6 +3,8 @@
 #define USART_STM32F103_H
 
 #include "platform.h"
+#include <stdarg.h>
+#include <stdio.h>
 
 #define USART_BUFFER8_SIZE 128U // size in bytes = USART_BUFFER8_SIZE * sizeof(ui8) bytes
 #define USART_BUFFER9_SIZE 128U // size in bytes = USART_BUFFER9_SIZE * sizeof(ui16) bytes
@@ -60,6 +62,9 @@ extern usart_t* usart2;
 extern usart_t* usart3;
 
 bool usart_config(usart_t* u, usart_wordlength_t mode, ui32 baud_rate_bps, bool clock_used, bool parity_used, bool parity_selection_odd);
+
+bool tx_buffer_full(usart_t* u);
+bool rx_buffer_full(usart_t* u);
 
 bool usart_tx_push(usart_t* u, ui16 data);
 bool usart_rx_pop(usart_t* u, ui16* output);
